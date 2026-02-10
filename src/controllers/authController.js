@@ -2,9 +2,10 @@ import bcrypt from 'bcrypt' ;
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import Session from '../models/session.js';
 
 const ACCESS_TOKEN_TTL = '15m';
-const REFRESH_TOKEN_TTL = '7d';
+const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60 * 1000;
 
 export const signUp = async(req,res) =>
 {
@@ -57,7 +58,7 @@ export const logIn = async(req,res) =>
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure:true,
-            sameSite: 'Strict',
+            sameSite: 'None',
             maxAge: REFRESH_TOKEN_TTL
         })
         return res.status(200).json({message: `User ${user.displayName} logged in successfully`, accessToken});

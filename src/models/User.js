@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
+        
     },
     displayName:{
         type: String,

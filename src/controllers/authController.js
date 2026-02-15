@@ -25,7 +25,7 @@ export const signUp = async(req,res) =>
             email,
             displayName,
         });
-        return res.status(204);
+        return res.status(204).json({message: 'User created successfully'});
     }
     catch(err){
        console.error('Error during user signup:', err);
@@ -81,6 +81,25 @@ export const logOut = async(req,res) =>
     }
     catch(err){
         console.error('Error during user logout:', err);
+       return res.status(500).json({message: 'Internal server error'});
+    }
+}
+export const refreshToken = async(req,res) =>
+{
+    try{
+        const token = req.cookies?.refreshToken;
+        if(!token){
+            return res.status(401).json({message: 'Refresh token missing'});
+        }
+        const session = await Session.findOne({refreshToken: token});
+        if(!session){
+            return res.status(403).json({message: 'Invalid or expired refresh token'});
+        }   
+        const accessToken = jwt.sign({userId: session.userId}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: ACCESS_TOKEN_TTL});
+        return res.status(200).json({accessToken});
+    }
+    catch(err){
+        console.error('Error during token refresh:', err);
        return res.status(500).json({message: 'Internal server error'});
     }
 }

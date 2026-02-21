@@ -13,7 +13,8 @@
             params: {
             sp: wordText,
             md: 'dpr',   
-            max: 1        
+            max: 1,
+            ipa: 1        
             }});
             const remoteData = response.data; // Axios puts the JSON here
 
@@ -29,7 +30,7 @@
                 }
             });
             const ipaTag = entry.tags ? entry.tags.find(t => t.startsWith('ipa_')) : null;
-            const phonetic = ipaTag ? `/${ipaTag.replace('ipa_', '')}/` : '';
+            const phonetic = ipaTag ? `/${ipaTag.replace('ipa_pron:', '')}/` : '';
             
             dictionaryEntry = await Dictionary.create({
             term: entry.word,

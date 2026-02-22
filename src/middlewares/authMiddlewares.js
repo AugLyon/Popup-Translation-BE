@@ -14,7 +14,7 @@ export const protectedRoute = async (req, res, next) => {
                 console.error('Token verification failed:', err);
                 return res.status(403).json({message: 'Invalid or expired token'});
             }
-            const user = await User.findById(decodedUser.userId).select('-hashedPassword', '-__v', '-createdAt', '-updatedAt');
+            const user = await User.findById(decodedUser.userId).select('-hashedPassword  -__v -createdAt -updatedAt');
             if(!user){
                 return res.status(404).json({message: 'User not found'});
             }

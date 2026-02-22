@@ -1,7 +1,15 @@
 import express from 'express';
-import { authenticateUser } from '../controllers/userController.js';
+
+import { getWords, saveWord } from '../controllers/vocabController.js';
+import { getMe } from '../controllers/userController.js';
+import { protectedRoute } from '../middlewares/authMiddlewares.js';
 
 const router = express.Router();
 
-router.get('/authenticate', authenticateUser);
+router.get('/me',protectedRoute ,getMe);
+
+router.post('/save-word' ,saveWord);
+
+router.post('/get-words', getWords);
+
 export default router;

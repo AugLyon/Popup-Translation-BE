@@ -10,6 +10,6 @@ router.get('/me',protectedRoute ,getMe);
 
 router.post('/save-word' ,saveWord);
 
-router.post('/get-words', getWords);
+router.get('/get-words', getWords);
 
 export default router;

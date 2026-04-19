@@ -25,7 +25,7 @@ export const signUp = async(req,res) =>
             email,
             displayName,
         });
-        return res.status(204).json({message: 'User created successfully'});
+        return res.status(201).json({message: 'User created successfully'});
     }
     catch(err){
        console.error('Error during user signup:', err);
@@ -61,6 +61,13 @@ export const logIn = async(req,res) =>
             sameSite: 'None',
             maxAge: REFRESH_TOKEN_TTL
         })
+        return res.status(200).json({
+            message: `User ${user.displayName} logged in successfully`, 
+            accessToken,
+            userEmail: user.email,
+            displayName: user.displayName
+        });
+        
         return res.status(200).json({message: `User ${user.displayName} logged in successfully`, accessToken});
     }
     catch(err){

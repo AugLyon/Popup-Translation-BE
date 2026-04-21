@@ -131,3 +131,15 @@ export const refreshTokenForExtension = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+export const logOutForExtension = async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+        if (refreshToken) {
+            await Session.deleteOne({ refreshToken });
+        }
+        return res.status(204).send();
+    } catch (err) {
+        console.error('Error during extension logout:', err);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
